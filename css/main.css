@@ -237,7 +237,7 @@ header {
 }
 
 .hero {
-    background: url('/images/camisa7_background.png') no-repeat fixed; 
+    background: url('../images/camisa7_background.png') no-repeat fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
