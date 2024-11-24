@@ -236,8 +236,20 @@ header {
     background-color: #e67600;
 }
 
+#camisa-7 {
+    background: url("../images/camisa7_background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 .hero {
-    background: url('../images/camisa7_background.png') no-repeat fixed; 
+    background: url("/somativa1-web/images/camisa7_background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
