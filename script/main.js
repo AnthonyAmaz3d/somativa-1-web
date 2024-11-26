@@ -1,32 +1,3 @@
-const getParams = () => {
-    const params = new URLSearchParams(window.location.search);
-    const dados = {};
-
-    for (const [key, value] of params.entries()) {
-        dados[key] = value;
-    }
-    return dados;
-}
-
-const dadosProcessados = document.getElementById('dados-processados');
-if (dadosProcessados) {
-    const dados = getParams();
-
-    if (Object.keys(dados).length > 0) {
-    dadosProcessados.innerHTML = `
-        <p><b>Primeiro nome: </b> ${dados.firstname}<p/>
-        <p><b>Sobrenome: </b> ${dados.lastname}<p/>
-        <p><b>Email:</b> ${dados.email}</p>
-        <p><b>Celular: </b> ${dados.number}<p/>
-        <p><b>Senha: </b> ${dados.password}<p/>
-        <p><b> Confirmação de senha: </b> ${dados.confirmpassword}<p/>
-        <p><b> Gênero: </b> ${dados.gender}<p/>
-    `
-    } else {
-        dadosProcessados.innerHTML = "<p>Nenhum dado foi enviado.</p>";
-    }
-};
-
 const phoneMask = (value) => {
     if(!value) return ""
     value = value.replace(/\D/g, '')
