@@ -1,17 +1,34 @@
+<?php
+session_start();
+include_once('config.php');
+
+if (!isset($_SESSION['email'])) {
+    header('Location: login.html');
+    exit;
+}
+
+// Verifica se o usuário já tem um plano
+$email = $_SESSION['email'];
+$sql = "SELECT id FROM socios_torcedores WHERE user_id = (SELECT id FROM usuarios WHERE email = ?)";
+$stmt = $conexao->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    // Redireciona para a página de sucesso ou outra página específica se já tiver um plano
+    header('Location: processa_plano.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="imagex/png" href="./images/BFR-logo.webp">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
-        crossorigin="anonymous" 
-        referrerpolicy="no-referrer" 
-    />
-    <title>Sobre o trabalho</title>
-    <script src="script/script.js" defer></script>
+    <title>Escolha seu Plano</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -21,30 +38,43 @@
                 <img src="./images/BFR-logo.webp" alt="">
             </div>
             <ul class="links">
-                <li><a href="index.html" class="home">HOME</a></li>
+                <li><a href="index.html" class="home">Home</a></li>
+                <li><a href="about.html" class="sobre">Sobre</a></li>
+                <a href="login.html" class="action-btn">Login</a>
             </ul>
-            <a href="contact_POST.php" class="action-btn">Cadastre-se</a>
             <div class="toggle-btn">
                 <i class="fa-solid fa-bars"></i>
             </div>
         </div>
         <div class="dropdown-menu">
-            <li><a href="index.html" class="home">HOME</a></li>
-            <li><a href="contact_GET.html" class="action-btn">Cadastre-se</a></li>
+            <li><a href="index.html" class="home">Home</a></li>
+            <li><a href="about.html" class="sobre">Sobre</a></li>
         </div>
     </header>
-    <section class="about">
-        <div class="conteudo">
-            <h2>Sobre o Trabalho</h2>
-            <p>O trabalho foi desenvolvido apenas com HTML, CSS e JavaScript, 
-            sem a utilização de qualquer framework ou biblioteca, os arquivos estão organizados em: css > main.css; images > todas as imagens utilizadas; script > main.js; e depois os arquivos HTML; 
-            O JavaScript foi utilizado para fazer o dropdown menu (menu de navegação no responsivo); 
-            utilizado para fazer a máscara do campo de celular; 
-            utilizado para fazer a confirmação das senhas e 
-            utilizado para fazer a captação dos dados através da fução getParams</p>
-            <h2>Autores: </h2>
-            <p>Alunos que desenvolveram o site: Anthony Maia Dolberth (Design, estrutura e JavaScript) e Octavio Francisco Duarte (Configuração CSS e responsividade).</p>
-        </div>
-    </section>
+    <div class="container mt-5">
+        <h1 class="text-center">Escolha seu Plano de Sócio-Torcedor</h1>
+        <form action="processa_plano.php" method="POST" class="mt-4">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="plano" value="BRANCO" id="BRANCO" required>
+                <label class="form-check-label" for="BRANCO">Plano BRANCO</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="plano" value="PRETO" id="PRETO" required>
+                <label class="form-check-label" for="PRETO">Plano PRETO</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="plano" value="ALVINEGRO" id="ALVINEGRO" required>
+                <label class="form-check-label" for="ALVINEGRO">Plano ALVINEGRO</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="plano" value="GLORIOSO" id="GLORIOSO" required>
+                <label class="form-check-label" for="GLORIOSO">Plano GLORIOSO</label>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary w-100">Confirmar</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
