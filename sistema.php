@@ -1,24 +1,38 @@
 <?php
-    session_start();
-    include_once('config.php');
-    // print_r($_SESSION);
-    if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['password']) == true))
-    {
-        unset($_SESSION['email']);
-        unset($_SESSION['password']);
-        header('Location: login.html');
-    }
-    $logado = $_SESSION['email'];
-    if(!empty($_GET['search']))
-    {
-        $data = $_GET['search'];
-        $sql = "SELECT * FROM usuarios WHERE id LIKE '%$data%' or fisrtname LIKE '%$data%'or lastname LIKE '%$data%' or email LIKE '%$data%' ORDER BY id DESC";
-    }
-    else 
-    {
-        $sql = "SELECT * FROM usuarios ORDER BY id DESC";
-    }
-    $result = $conexao->query($sql);
+session_start();
+include_once('config.php');
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['email']) || !isset($_SESSION['password'])) {
+    header('Location: login.html');
+    exit;
+}
+
+$email = $_SESSION['email'];
+
+// Consulta para verificar o nível de acesso
+$sql = "SELECT nivel_acesso FROM usuarios WHERE email = ?";
+$stmt = $conexao->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+if (!$user || $user['nivel_acesso'] != 'admin') {
+    // Redireciona para outra página caso não seja admin
+    header('Location: usuarios.php'); // Substitua "usuario.php" pela página para usuários comuns
+    exit;
+}
+if(!empty($_GET['search']))
+{
+    $data = $_GET['search'];
+    $sql = "SELECT * FROM usuarios WHERE id LIKE '%$data%' or fisrtname LIKE '%$data%'or lastname LIKE '%$data%' or email LIKE '%$data%' ORDER BY id DESC";
+}
+else 
+{
+    $sql = "SELECT * FROM usuarios ORDER BY id DESC";
+}
+$result = $conexao->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -57,7 +71,7 @@
     </header>
     <div class="text-welcome">
         <?php 
-            echo "<h1>Bem vindo <u>$logado</u></h1>";
+            echo "<h1>Bem vindo Admin</h1>";
         ?>
     </div>
     <div class="box-search">
