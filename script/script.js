@@ -11,7 +11,6 @@ const handlePhone = (event) => {
     input.value = phoneMask(input.value)
 };
 
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('form-content');
     const password = document.getElementById('password');
@@ -40,4 +39,18 @@ toggleBtn.onclick = function() {
     toggleBtnIcon.classList = isOpen
         ? 'fa-solid fa-xmark'
         : 'fa-solid fa-bars'
+}
+
+var search = document.getElementById('pesquisar');
+
+search.addEventListener("keydown", function(event){
+    if (event.key == "Enter")
+    {
+        searchData();
+    }
+});
+
+function searchData()
+{
+    window.location = 'sistema.php?search='+search.value;
 }
