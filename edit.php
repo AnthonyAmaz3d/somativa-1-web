@@ -46,6 +46,7 @@
     />
     <link rel="shortcut icon" type="imagex/png" href="./images/BFR-logo.webp">
     <title>Formulário</title>
+    <script src="script/script.js" defer></script>
 </head>
 <body>
     <header>

@@ -26,7 +26,7 @@ if (!$user || $user['nivel_acesso'] != 'admin') {
 if(!empty($_GET['search']))
 {
     $data = $_GET['search'];
-    $sql = "SELECT * FROM usuarios WHERE id LIKE '%$data%' or fisrtname LIKE '%$data%'or lastname LIKE '%$data%' or email LIKE '%$data%' ORDER BY id DESC";
+    $sql = "SELECT * FROM usuarios WHERE id LIKE '%$data%' or firstname LIKE '%$data%'or lastname LIKE '%$data%' or email LIKE '%$data%' ORDER BY id DESC";
 }
 else 
 {
